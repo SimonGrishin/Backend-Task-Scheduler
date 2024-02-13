@@ -117,7 +117,6 @@ _These are the instructions for cloning the repository and installing any depend
 
 
 #### Exercise 1: Configure task driven scheduler in Go
-
 Develop a basic Go program that acts as a task scheduler. The program will read
 tasks and their types from a YAML configuration file, and execute these tasks based on their
 defined type. This exercise introduces basic Go syntax, enums, file operations, and working with
@@ -129,24 +128,58 @@ go run task_scheduler.go
 ```
 
 #### Exercise 2: Building a RESTful API with Gin
-
 Expand upon the knowledge gained from the first exercise by developing a RESTful
 API using the Gin framework. This API will manage a collection of tasks (similar to the ones in
 the first exercise) with the ability to Create, Read, Update, and Delete (CRUD) tasks
 
-Running the task_scheduler.go:
+Running the restful_api.go:
   ```sh
   go run restful_api.go
   ```
 
 #### Exercise 3: MongoDB: Integrating MongoDB with Gin API
-
 Enhance the task management API developed in the previous exercise by
 integrating MongoDB for persistent data storage. This involves setting up a MongoDB database,
 connecting it with the Go application, and modifying the API to perform CRUD operations on the
 database.
 
+Running chat.go:
+  ```sh
+  go run chat.go
+  ```
 
+#### Exercise 4: Docker: Containerize the API with Docker
+Gain practical experience in Docker by containerizing the Gin-based API with
+MongoDB integration. This exercise focuses on Docker usage, creating Docker images, and
+managing containers while ensuring the API is accessible from outside the container.
+
+Build the docker image:
+  ```sh
+  docker build . -t go-container-test:latest
+  ```
+_you can change go-container-test to any name but keep it consistent_
+
+Run the docker container using the image:
+```sh
+docker run -e PORT=9000 -p 9000:9000 go-container-test:latest
+```
+
+_you can test endpoints using: https://0.0.0.0.9000/tasks_
+
+#### Exercise 5: Kubernetes: Deploying the containerized API on Kubernetes
+Learn the basics of Kubernetes by deploying the previously Dockerized Gin-based
+API onto a local Kubernetes cluster. This exercise introduces Kubernetes concepts like pods,
+deployments, services, and basic cluster management.
+
+Apply the kubernetes deployment and service manifests:
+```sh
+  kubectl apply -f bb-admin.yaml
+  ```
+
+Check deployed containers:
+```sh
+kubectl get deployments
+```
 
 <!-- USAGE EXAMPLES -->
 ## Usage
