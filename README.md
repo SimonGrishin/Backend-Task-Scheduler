@@ -49,41 +49,54 @@ This project was seperated into 5 exercises:
 4. Docker: Containerizing the API with Docker
 5. Kubernetes: Depolying the Containerized API on Kubernetes
 
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
-
-Use the `BLANK_README.md` to get started.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+The purpose of this project is to build a task scheduling system that builds upon itself to upgrade functionality.
+This README will explain each step with visuals and Command-Line arguments to run the applications.
+<br />
+<br >
 
 
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+Tools and Frameworks with links to learning resources
 
 * [![Go][Go.js]][Go-url]
+  * Learning: https://go.dev/tour/welcome/1
 * [![Gin][Gin.js]][Gin-url]
+  * Learning: https://go.dev/doc/tutorial/web-service-gin
 * [![MongoDB][MongoDB.js]][MongoDB-url]
+  * Learning: https://www.mongodb.com/docs/manual/tutorial/
 * [![Docker][Docker.io]][Docker-url]
+  * Learning: https://docs.docker.com/get-started/overview/
 * [![Kub][Kub.dev]][Kub-url]
+  * Learning: https://kubernetes.io/docs/tutorials/kubernetes-basics/
+
+References to each tool and language is provided above.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 
 
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+The IDE used for this project is Microsoft's Visual Studio Code
+It is able to run CLI and the extension manager is able to create dockerfiles, go files, YAML and JSON needed for configuration
+
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+you will need to download VScode, Docker Desktop
+* MS VScode: https://code.visualstudio.com/download
+* Docker: https://www.docker.com/products/docker-desktop/
+
+you will need to set up MongoDB demo account
+* MongoDB: https://account.mongodb.com/account/login
+* Instructions: https://www.mongodb.com/docs/atlas/tutorial/create-atlas-account/
+  * after set up create a collection names `tasks`  inside the `task-scheduler` collection for default. Otherwise update the config.yaml for _databaseName_ and _connectionString_
+ 
+
 
 ### Installation
 
@@ -106,6 +119,13 @@ _Below is an example of how you can instruct your audience on installing and set
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
+
+#### Exercise 1: Configure task driven scheduler in Go
+
+Develop a basic Go program that acts as a task scheduler. The program will read
+tasks and their types from a YAML configuration file, and execute these tasks based on their
+defined type. This exercise introduces basic Go syntax, enums, file operations, and working with
+YAML configurations.
 
 <!-- USAGE EXAMPLES -->
 ## Usage
