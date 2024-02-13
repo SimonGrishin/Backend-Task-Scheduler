@@ -1,0 +1,2 @@
+# Config.yaml file to configurate the gin server
+port: 8088

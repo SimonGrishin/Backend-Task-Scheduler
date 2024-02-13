@@ -1,0 +1,18 @@
+tasks:
+  - type: PrintTask
+    data: "Hello, world!"
+
+  - type: Pizza
+    data: "dominoes"
+
+  - type: ComputeTask
+    data: "1+1"
+
+  - type: ComputeTask
+    data: "7*8"
+
+  - type: PrintTask
+    data: "I don't understand how this stuff works but I'll figure it out"
+
+  - type: Transform
+    data: "Optimus Prime"

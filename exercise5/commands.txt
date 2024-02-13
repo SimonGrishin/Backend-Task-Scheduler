@@ -1,0 +1,17 @@
+* How to view logs for a pod within a specific container:
+    kubectl logs <pod_name> -c <container_name>
+
+* Running/Stopping pods:
+    kubectl apply -f pod.yaml
+
+    kubectl delete pod <pod_name>
+
+The yaml file specifies the nameof the containers and volumes
+
+* You can check the status of a pod:
+    kubectl get pods
+
+* Opening a shell inside a pod for Debug purposes:
+    kubectl exec -it <pod_name> -- /bin/sh
+    
+

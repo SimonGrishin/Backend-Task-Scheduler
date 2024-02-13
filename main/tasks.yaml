@@ -1,0 +1,6 @@
+tasks:
+  - type: PrintTask
+    data: "Hello, world!"
+
+  - type: ComputeTask
+    data: "1+1"

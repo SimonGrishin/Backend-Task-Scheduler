@@ -1,0 +1,45 @@
+# Stage 1: Build the Go application
+FROM golang:1.21 AS builder
+
+# Set environment variables
+ENV GO111MODULE=on \
+    CGO_ENABLED=0 \
+    GOOS=linux \
+    GOARCH=amd64
+
+WORKDIR /app
+
+# Copy go.mod and go.sum files to the container
+COPY go.mod go.sum ./
+
+# Download Go modules
+RUN go mod download
+
+# Copy the rest of the application source code to the container
+COPY . .
+
+# Build the Go application
+RUN go build -o app .
+
+# Stage 2: Create a minimal image for production
+FROM alpine:latest
+
+RUN apk --no-cache add ca-certificates
+
+WORKDIR /root/
+
+# Copy the built executable from the builder stage
+COPY --from=builder /app/app .
+
+# Expose port for the application
+EXPOSE 9000
+
+# Set environment variables for MongoDB connection
+ENV PORT="9000"
+ENV CONNECTION_STRING="mongodb+srv://%s:%s@cluster0.zqam4sj.mongodb.net/"
+ENV DATABASE_NAME="task_scheduler"
+ENV USERNAME="simong"
+ENV PASSWORD="Esketit_2002"
+
+# Command to run the Go application
+CMD ["./app"]
