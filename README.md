@@ -184,15 +184,10 @@ kubectl get deployments
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+Deploying Kubernetes with Docker containers has multiple practical applications from running applications on unknown operating systems and managing resources.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-
+In combination with cloud data storage and kubernetes resource allocation, applications can run completely in the cloud and efficiently use the local hardware.
+This is an affordable and simple approach to scalable applications for backend developement
 
 
 <!-- CONTACT -->
