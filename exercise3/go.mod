@@ -1,4 +1,4 @@
-module containerized-app
+module exercise3
 
 go 1.21.6
 
@@ -6,6 +6,7 @@ require (
 	github.com/Knetic/govaluate v3.0.0+incompatible
 	github.com/gin-gonic/gin v1.9.1
 	go.mongodb.org/mongo-driver v1.13.1
+	gopkg.in/yaml.v2 v2.4.0
 )
 
 require (
