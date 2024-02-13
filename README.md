@@ -87,9 +87,11 @@ It is able to run CLI and the extension manager is able to create dockerfiles, g
 
 ### Prerequisites
 
-you will need to download VScode, Docker Desktop
+you will need to download Go, VScode, Docker Desktop, and Postman
+* Go: https://go.dev/doc/install
 * MS VScode: https://code.visualstudio.com/download
 * Docker: https://www.docker.com/products/docker-desktop/
+* Postman: https://www.postman.com/downloads/
 
 you will need to set up MongoDB demo account
 * MongoDB: https://account.mongodb.com/account/login
@@ -100,18 +102,17 @@ you will need to set up MongoDB demo account
 
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
+_These are the instructions for cloning the repository and installing any dependencies_
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   git clone https://github.com/SimonGrishin/Backend-Task-Scheduler.git
    ```
-3. Install NPM packages
+2. 
    ```sh
    npm install
    ```
-4. Enter your API in `config.js`
+3. Enter your API in `config.js`
    ```js
    const API_KEY = 'ENTER YOUR API';
    ```
