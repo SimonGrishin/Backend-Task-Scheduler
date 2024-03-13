@@ -6,5 +6,6 @@ use (
 	./exercise3
 	./exercise4
 	./practice
-	./testing
+	./swagger-test
+//./testing
 )

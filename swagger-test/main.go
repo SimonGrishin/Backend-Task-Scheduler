@@ -8,14 +8,42 @@ import (
 	"net/http"
 	"os"
 
+	_ "friends2meet/swagger-test/docs"
+
 	"github.com/Knetic/govaluate"
 	"github.com/gin-gonic/gin"
+
+	swaggerFiles "github.com/swaggo/files" // swagger embed files
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"gopkg.in/yaml.v2"
 )
+
+// @title 			swagger-task-scheduler-api
+// @version 		1.0
+// @description 	This is a simple API documentation example that takes a GIN API using mongoDB in GO to handle API calls
+// @termsOfService 	http://swagger.io/terms/
+
+// @contact.name   API Support
+// @contact.url    http://www.swagger.io/support
+// @contact.email  support@swagger.io
+
+// @license.name  Apache 2.0
+// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host      localhost:8080
+// @BasePath  /api/v1
+
+// @securityDefinitions.apikey	ApiKeyAuth
+// @in							header
+// @name						Authorization
+// @description					Security feature to test API-keys
+
+// @externalDocs.description  OpenAPI
+// @externalDocs.url          https://swagger.io/resources/open-api/
 
 type TaskType int
 
@@ -42,13 +70,6 @@ func (t *TaskType) UnmarshalJSON(b []byte) error {
 
 	return nil
 }
-
-// type Task struct {
-// 	ID     TaskID   `json:"_id" bson:"_id"`
-// 	Data   string   `json:"data" bson:"data"`
-// 	Type   TaskType `json:"type" bson:"type"`
-// 	Status string   `json:"status" bson:"status"`
-// }
 
 type Task struct {
 	ID     primitive.ObjectID `json:"_id" bson:"_id"`
@@ -89,18 +110,26 @@ func main() {
 
 	tasksCollection = client.Database("task_scheduler").Collection("tasks")
 
-	router := gin.Default()
-	router.POST("/tasks", addTask)
-	router.GET("/tasks", getTasks)
-	router.GET("/tasks/:id", getTaskByID)
-	router.PUT("/tasks/:id", updateTask)
-	router.DELETE("/tasks/:id", deleteTask)
+	r := gin.Default()
 
-	addr := fmt.Sprintf("localhost:%d", config.Port)
-	router.Run(addr)
+	// add swagger
+	r.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
+	v1 := r.Group("/api/v1")
+	{
+		v1.POST("tasks", addTask)
+		v1.GET("tasks", getTasks)
+		v1.GET("tasks/:id", getTaskByID)
+		v1.PUT("tasks/:id", updateTask)
+		v1.DELETE("tasks/:id", deleteTask)
+	}
+
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	r.Run(":8080")
 
 }
 
+// loadConfig loads configuration settings from the specified file.
 func loadConfig(filename string) (*Config, error) {
 	config := &Config{}
 	file, err := os.ReadFile(filename)
@@ -114,21 +143,16 @@ func loadConfig(filename string) (*Config, error) {
 	return config, nil
 }
 
-// unused function
-// func connectDB(uri string) (*mongo.Client, error) {
-
-// 	// Connect to your Atlas cluster
-// 	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))
-// 	if err != nil {
-// 		panic(err)
-// 	}
-
-// 	fmt.Println("Connected to client... ")
-// 	defer client.Disconnect(context.TODO())
-
-// 	return client, nil
-// }
-
+// @Summary Add a new task
+// @Description Add a new task to the database
+// @Accept json
+// @Produce json
+// @Param task body Task true "Task object"
+// @Security ApiKeyAuth
+// @Tags Tasks
+// @Success 201 {object} Task
+// @Failure 404 "task not found"
+// @Router /tasks [post]
 func addTask(c *gin.Context) {
 	var newTask Task
 	if err := c.BindJSON(&newTask); err != nil {
@@ -148,8 +172,12 @@ func addTask(c *gin.Context) {
 	c.JSON(http.StatusCreated, newTask)
 }
 
-// Getting All tasks
-
+// @Summary Get all tasks
+// @Description Retrieve all tasks from the database
+// @Produce json
+// @Tags Tasks
+// @Success 200 {array} Task
+// @Router /tasks [get]
 func getTasks(c *gin.Context) {
 
 	cursor, err := tasksCollection.Find(context.Background(), bson.D{})
@@ -176,8 +204,13 @@ func getTasks(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, tasks)
 }
 
-// Getting Task by ID
-
+// @Summary Get a task by ID
+// @Description Retrieve a task from the database by its ID
+// @Produce json
+// @Param id path string true "Task ID"
+// @Tags Tasks
+// @Success 200 {object} Task
+// @Router /tasks/{id} [get]
 func getTaskByID(c *gin.Context) {
 	id := c.Param("id")
 	objectID, err := primitive.ObjectIDFromHex(id)
@@ -196,6 +229,15 @@ func getTaskByID(c *gin.Context) {
 	c.JSON(http.StatusOK, task)
 }
 
+// @Summary Update a task
+// @Description Update a task in the database by its ID
+// @Accept json
+// @Produce json
+// @Param id path string true "Task ID"
+// @Param task body Task true "Updated task object"
+// @Tags Tasks
+// @Success 200 {object} Task
+// @Router /tasks/{id} [put]
 func updateTask(c *gin.Context) {
 	id := c.Param("id")
 	objectID, err := primitive.ObjectIDFromHex(id)
@@ -219,6 +261,13 @@ func updateTask(c *gin.Context) {
 	c.JSON(http.StatusOK, updatedTask)
 }
 
+// @Summary Delete a task
+// @Description Delete a task from the database by its ID
+// @Produce json
+// @Param id path string true "Task ID"
+// @Tags Tasks
+// @Success 200 {string} string "Task deleted successfully"
+// @Router /tasks/{id} [delete]
 func deleteTask(c *gin.Context) {
 	id := c.Param("id")
 	objectID, err := primitive.ObjectIDFromHex(id)

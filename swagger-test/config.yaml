@@ -1,0 +1,6 @@
+port: 8080
+connection_string: "mongodb+srv://%s:%s@cluster0.zqam4sj.mongodb.net/"
+database_name: "task_scheduler"
+username: "simong"
+password: "Esketit_2002"
+
